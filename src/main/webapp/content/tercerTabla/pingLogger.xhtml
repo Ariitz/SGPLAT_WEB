@@ -1,0 +1,41 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+>
+    <ui:define name="content">
+        Ping pooler
+        <p:dataTable id="tablaIpSuccess" value="#{pregunta31.listSuccess}" var="var">
+            <p:column>
+                <h:outputText value="#{var.get('name')}"/>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{var.get('id')}"/>
+            </p:column>
+        </p:dataTable>
+        <p:dataTable id="tablaIpError" value="#{pregunta31.listError}" var="var">
+            <p:column>
+                <h:outputText value="#{var.get('name')}"/>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{var.get('id')}"/>
+            </p:column>
+        </p:dataTable>
+
+        <h:form>
+            <h:panelGrid columns="2">
+                <p:outputLabel for="correos" value="Correos: "/>
+                <p:chips id="correos" value="#{pregunta31.correos}"     />
+            </h:panelGrid>
+
+            <h:panelGrid columns="2">
+                <p:outputLabel for="telefonos" value="telefonos: "/>
+                <p:chips id="telefonos" value="#{pregunta31.numeros}"/>
+            </h:panelGrid>
+
+            <p:commandButton value="Enviar" actionListener="#{pregunta31.onClick()}" process="@form"/>
+        </h:form>
+    </ui:define>
+</ui:composition>

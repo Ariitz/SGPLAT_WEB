@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:head id="head">
+
+
+</h:head>
+
+<h:body style="background-color: #3399CC;">
+
+
+    <p:outputLabel value="SGPLAT" style="margin-left: 1%; color: white;
+    font-family: Purisa;
+    font-size: 30px;
+
+">
+
+    </p:outputLabel>
+
+    <h:form id="form" style="background-size: 100%;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5%;
+    width: 100%;
+    height: 100%;
+">
+
+        <p:graphicImage value="content/PLAT.png" style="width: 10%;
+
+    border: solid rgb(36, 24, 196) 5px;
+    height: 10%;"></p:graphicImage>
+        <br/>
+        <p:outputLabel value="INGRESE SUS DATOS" style=" color: white;">
+
+        </p:outputLabel>
+        <p:messages id="msgs" />
+        <br/>
+
+        <p:panelGrid  columns="1" >
+            <p:column>
+                <p:inputText id="correoEspe" placeholder="Correo electronico" value="#{loginMB.user}"
+                />
+            </p:column>
+            <p:column >
+                <p:password id="feedbackEsp"
+                            feedback="true" placeholder="Contraseña" value="#{loginMB.password}"
+                />
+            </p:column>
+            <p:column >
+                <p:commandButton value="Ingresar"
+                                 ajax="false"
+                                 action="#{loginMB.login()}"
+                                 process="@all"
+                                 style="width: 100%;
+                                 height: 100%; background-color: #3399FF; color: white"
+                />
+            </p:column>
+            <p:column >
+                <p:commandButton value="Registrarse"
+                                 id="ResgisterEsp"
+                                 oncomplete="PF('dlgAdd').show()"
+                                 update="@([id$=form])"
+                                 style="width: 100%;
+                                height: 100%; background-color: #3399FF; color: white"
+                />
+            </p:column>
+        </p:panelGrid>
+
+
+
+
+
+        <p:dialog header="Registrese" widgetVar="dlgAdd" modal="false" height="200" style="background-color: #3399CC">
+
+            <p:messages id="msgss" />
+            <span class="ui-float-label">
+               <p:inputText id="nom" value="#{especialistaAdd.nombre}"/>
+               <p:outputLabel  value="Nombre" style="color: white"/>
+           </span> <br/>
+            <br/>
+            <span class="ui-float-label">
+                    <p:inputText id="correoEsp" value="#{especialistaAdd.correo}"/>
+                    <p:outputLabel  value="Correo electrónico" style="color: white"/>
+                </span> <br/><br/>
+            <span class="ui-float-label">
+               <p:password id="feedbackEspR"
+                           value="#{especialistaAdd.contrasena}"
+                           feedback="true"
+               />
+               <p:outputLabel id="pw" value="Contraseña" style="color: white"/>
+           </span> <br/>
+            <br/>
+
+            <p:commandButton value="Agregar"
+                             id="btnaddEsp"
+                             ajax="false"
+                             actionListener="#{especialistaAdd.add(especialistaIndexMB.especialistas)}"
+                             style="margin-left:30%; background-color: #3399FF; color: white"
+                             process="@all"/>
+
+
+        </p:dialog>
+
+    </h:form>
+</h:body>
+</html>

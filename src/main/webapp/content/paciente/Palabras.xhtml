@@ -1,0 +1,109 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+>
+    <ui:define name="content">
+        <h:outputLabel value="Nombre: " style="color: darkblue"></h:outputLabel>
+        <h:outputLabel value="#{pacienteIndexMB.pacienteSelected.nombre}" style="color: blue"/> <br/>
+        <h:outputLabel value="Fecha de nacimiento: " style="color: darkblue" ></h:outputLabel>
+        <h:outputLabel value="#{pacienteIndexMB.pacienteSelected.fechaNacimiento}" style="color: blue"/> <br/>
+        <h:outputLabel value="Género: " style="color: darkblue"></h:outputLabel>
+        <h:outputLabel value="#{pacienteIndexMB.pacienteSelected.genero}" style="color: blue"/> <br/>
+        <h:outputLabel value="Grado máximo de estudios: "  style="color: darkblue"></h:outputLabel>
+        <h:outputLabel value="#{pacienteIndexMB.pacienteSelected.gradoMaximoEstudios}" style="color: blue"/> <br/>
+        <h:outputLabel value="Lateralidad: " style="color: darkblue"></h:outputLabel>
+        <h:outputLabel value="#{pacienteIndexMB.pacienteSelected.lateralidad}" style="color: blue"/> <br/>
+        <h:outputLabel value="Correo: " style="color: darkblue"></h:outputLabel>
+        <h:outputLabel value="#{pacienteIndexMB.pacienteSelected.correo}" style="color: blue"/> <br/>
+        <h:outputLabel value="Estado: " style="color: darkblue"></h:outputLabel>
+        <h:outputLabel value="#{pacienteIndexMB.pacienteSelected.estado}" style="color: blue"/> <br/>
+        <h:outputLabel value="Observaciones: " style="color: darkblue"></h:outputLabel>
+        <h:outputLabel value="#{pacienteIndexMB.pacienteSelected.observaciones}" style="color: blue"/> <br/>
+        <br/>
+
+
+
+        <h:form id="formP">
+           <!-- <p:menuButton value="Pruebas">
+                <p:menuitem value="Raven" action="#{}" update="messages" icon="pi pi-save"/>
+                <p:menuitem value="10 palabras" action="#{}" update="messages" icon="pi pi-refresh"/>
+            </p:menuButton>-->
+            <p:outputLabel value="10 PALABRAS">
+
+            </p:outputLabel>
+            <p:commandButton value="Asignar prueba" style="background-color: #0099FF; margin-left: 84%"
+                             onclick="PF('dlgAsig').show()"
+            />
+            <p:dataTable id="tablaIntentosPalabras"
+                         var="intento"
+                         widgetVar="intentos"
+                         value="#{pacienteIndexMB.intentos}"
+
+            >
+                <p:column headerText="estado" style="color: darkblue;">
+                    <h:outputText value="#{intento.getString('edo')}"/>
+                </p:column>
+                <p:column headerText="fecha de realización" style="color: darkblue;">
+                    <h:outputText value="#{intento.getString('fecha_i')}"/>
+                </p:column>
+
+                <p:column headerText="aciertos" style="color: darkblue;">
+                    <h:outputText value="#{intento.getString('aciertos')}"/>
+                </p:column>
+
+                <p:column>
+                    <p:commandButton  id="evaluar" value="Evaluar"
+                                      ajax="false"
+                                      process="@all"
+                                      action="#{pacienteIndexMB.evaluar(intento)}"
+                    > </p:commandButton>
+                </p:column>
+
+            </p:dataTable>
+
+
+            <!-- Asignar pruebas  -->
+            <p:dialog header="Seleccione la(s) prueba(s) a asignar" widgetVar="dlgAsig"
+                      modal="false" width="450" height="150"
+                      style="background-color: #3399CC"
+            >
+
+            <span class="ui-float-label">
+               <p:outputLabel  value="Raven" style="color: white"/>
+                <p:selectBooleanButton id="value1" value="#{pacienteIndexMB.raven}" onLabel="Seleccionada"
+                                       offLabel="Sin seleccionar" style="width:40%; margin-left: 15%; background-color: #3399CC" />
+
+           </span> <br/>
+                <br/>
+                <span class="ui-float-label">
+                    <p:outputLabel  value="10 palabras" style="color: white"/>
+                    <p:selectBooleanButton id="value2" value="#{pacienteIndexMB.palabras}"
+                                           onLabel="Seleccionada" offLabel="Sin seleccionar"
+                                           style="width:40%; margin-left: 6%; background-color: #3399CC" />
+                    <br/>
+                </span> <br/>
+                <p:commandButton value="Asignar"
+                                 id="btnAsigna"
+
+                                 ajax="false"
+                                 process="@all"
+                                 actionListener="#{pacienteIndexMB.asigPalabras(pacienteIndexMB.raven, pacienteIndexMB.palabras)}"
+                                 update="@([id$=tablaIntentosPalabras]) @([id$=formP])"
+                                 style="margin-left: 40%; background-color: #3399CC"
+                                 styleClass="ui-priority-primary"
+                                 />
+
+
+            </p:dialog>
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times"/>
+            </p:confirmDialog>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

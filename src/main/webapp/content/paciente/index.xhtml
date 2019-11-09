@@ -1,0 +1,308 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+>
+    <ui:define name="content">
+        <h:form id="formPaciente" style="background-color: #3399CC;">
+            <p:commandButton value="Agregar" style="background-color: #0099FF"
+                             onclick="PF('dlgAdd').show()"/>
+
+            <p:dataTable id="tablaPaciente"
+                         style="background-color: #3399CC;"
+                         var="paciente"
+                         widgetVar="pacientes"
+                         value="#{pacienteIndexMB.pacientes}"
+                         filteredValue="#{pacienteIndexMB.pacientesFilter}"
+                         editable="true"
+
+
+            >
+                <f:facet name="header" >
+                    <p:outputPanel >
+                        <h:outputText value="Buscar:"  style="color: darkblue;" />
+                        <p:inputText id="globalFilter" onkeyup="PF('pacientes').filter()" style="width:150px" placeholder="buscar"/>
+                    </p:outputPanel>
+                </f:facet>
+                <p:column headerText="Nombre"  style="color: darkblue;" filterBy="#{paciente.getString('nombre')}" filterMatchMode="contains">
+                    <h:outputText value="#{paciente.getString('nombre')}"/>
+
+                </p:column>
+                <p:column headerText="Correo" style="color: darkblue;" filterBy="#{paciente.getString('correo')}" filterMatchMode="contains">
+                    <h:outputText value="#{paciente.getString('correo')}"/>
+                </p:column>
+
+                <p:column id="lateral" headerText="Lateralidad" style="color: darkblue;" filterBy="#{paciente.getString('lateralidad')}" filterMatchMode="contains">
+                    <h:outputText value="#{paciente.getString('lateralidad')}"/>
+                </p:column>
+
+                <p:column id="gener" headerText="Genero" style="color: darkblue;" filterBy="#{paciente.getString('genero')}" filterMatchMode="contains">
+                    <h:outputText value="#{paciente.getString('genero')}"/>
+                </p:column>
+
+                <p:column  id="gradoMaximoEstudiosst" headerText="Estudios" style="color: darkblue;" filterBy="#{paciente.getString('gradoMaximoEstudios')}" filterMatchMode="contains">
+                    <h:outputText value="#{paciente.getString('gradoMaximoEstudios')}"/>
+                </p:column>
+                <p:column id="observa" headerText="Observaciones" style="color: darkblue;">
+                    <h:outputText value="#{paciente.getString('observaciones')}"/>
+                </p:column>
+                <p:column  id="acciones" headerText="Acciones" style="color: darkblue;">
+
+
+                    <p:menuButton value="Consultar" expanded="false"
+                                     style="background-color: #3399CC; color: #3399CC;  width:40%;"
+
+                    >
+                        <p:menuitem value="raven" action="#{pacienteIndexMB.consultar(paciente)}">
+
+                        </p:menuitem>
+
+                        <p:menuitem value="10 palabras" action="#{pacienteIndexMB.consultarPalabras(paciente)}">
+
+                        </p:menuitem>
+                    </p:menuButton> <br/>
+                    <p:commandButton value="Modificar"
+                                     style="background-color: #3399CC; width: 100%"
+                                     oncomplete="PF('dlgShow').show()"
+                                     update="@([id$=pacienteupdate])"
+                                     actionListener="#{pacienteIndexMB.prepareUpdate(paciente)}"/>
+                </p:column>
+            </p:dataTable>
+
+            <!-- Agregar nuevo paciente  -->
+            <p:dialog header="Ingrese los datos del paciente" widgetVar="dlgAdd" modal="false" height="410"
+                      width="600"
+                      style="background-color: #3399CC"
+            >
+
+            <span class="ui-float-label">
+               <p:inputText id="nom"  placeholder="ingrese su nombre" value="#{pacienteAdd.nombre}"/>
+               <p:outputLabel for="@previous" value="  Nombre"
+                              style="color: white"
+               />
+           </span> <br/>
+                <span class="ui-float-label">
+                    <p:inputText id="correo" value="#{pacienteAdd.correo}" placeholder="Ej.: usuario@servidor.com"/>
+                    <p:outputLabel for="@previous" value="  Correo electrónico"
+                                   style="color: white"
+                    />
+                </span> <br/>
+                <span class="ui-float-label">
+               <p:password id="feedback"
+                           value="#{pacienteAdd.contrasena}"
+                           feedback="true"
+                           placeholder="contraseña"
+               />
+               <p:outputLabel for="@previous" value="  Contraseña"
+                              style="color: white"
+               />
+           </span> <br/>
+                <span class="ui-float-label">
+                    <p:selectOneMenu id="gen" value="#{pacienteAdd.genero}" width="500"
+                        style="width: 45%"
+                    >
+                        <f:selectItem itemLabel="hombre" itemValue="hombre" />
+                        <f:selectItem itemLabel="mujer" itemValue="mujer" />
+                    </p:selectOneMenu>
+               <p:outputLabel for="@previous" value="  Genero"
+                              style="color: white"
+               />
+           </span> <br/>
+
+
+                <span class="ui-float-label">
+                    <p:selectOneMenu id="gradoMaximoEstudios" value="#{pacienteAdd.gradoMaximoEstudios}"
+                                     style="width: 45%"
+                    >
+                        <f:selectItem itemLabel="sin estudios" itemValue="sin estudios"/>
+                        <f:selectItem itemLabel="preescolar" itemValue="preescolar" />
+                        <f:selectItem itemLabel="primaria" itemValue="primaria" />
+                        <f:selectItem itemLabel="secundaria" itemValue="secundaria" />
+                        <f:selectItem itemLabel="bachillerato" itemValue="bachillerato" />
+                        <f:selectItem itemLabel="licenciatura" itemValue="licenciatura" />
+                        <f:selectItem itemLabel="maestria" itemValue="maestria" />
+                        <f:selectItem itemLabel="doctorado" itemValue="doctorado" />
+                        <f:selectItem itemLabel="otro" itemValue="otro" />
+                    </p:selectOneMenu>
+               <p:outputLabel for="@previous" value="  Grado Maximo de Estudios"
+                              style="color: white"
+               />
+           </span> <br/>
+                <span class="ui-float-label">
+                    <p:selectOneMenu id="late" value="#{pacienteAdd.lateralidad}"
+                                     style="width: 45%"
+                    >
+                        <f:selectItem itemLabel="diestro" itemValue="diestro" />
+                        <f:selectItem itemLabel="zurdo" itemValue="zurdo" />
+                        <f:selectItem itemLabel="ambidiestro" itemValue="ambidiestro" />
+                    </p:selectOneMenu>
+               <p:outputLabel for="@previous" value="  Lateralidad"
+                              style="color: white"
+               />
+           </span> <br/>
+                <span class="ui-float-label">
+               <p:inputMask id="fn" value="#{pacienteAdd.fechaNacimiento}"
+                            mask="99/99/9999"
+                            placeholder="dd/mm/aaaa"/>
+               <p:outputLabel for="@previous" value="  Fecha de Nacimiento"
+                              style="color: white"
+               />
+           </span> <br/>
+                <span class="ui-float-label">
+               <p:inputTextarea id="observaciones" value="#{pacienteAdd.observaciones}"
+                            placeholder="Observaciones"
+                                rows="6" cols="33"
+
+               />
+               <p:outputLabel for="@previous" value="  Observaciones"
+                              style="color: white"
+               />
+           </span> <br/> <br/>
+
+                <p:commandButton value="Agregar"
+                                 id="btnadd"
+                                 ajax="false"
+                                 process="@all"
+                                 actionListener="#{pacienteAdd.add(pacienteIndexMB.pacientes)}"
+                                 update="@([id$=tablaPaciente]) @([id$=formPaciente]) "
+                                 style="margin-left:30%; background-color: #3399FF; color: white; margin-right:20px;"
+                                 styleClass="ui-priority-primary"
+                                 />
+
+
+            </p:dialog>
+
+
+            <!-- Guardar modificaciones  -->
+
+            <p:dialog id="pacienteupdate" header="Modificar" widgetVar="dlgShow" modal="false" height="380" width="500"
+                      style="background-color: #3399CC"
+            >
+                    <span class="ui-float-label">
+                        <p:selectOneMenu id="genero" value="#{pacienteIndexMB.pacienteSelected.genero}" width="500"
+                                         style="width: 45%"
+                        >
+                        <f:selectItem itemLabel="hombre" itemValue="hombre" />
+                        <f:selectItem itemLabel="mujer" itemValue="mujer" />
+                    </p:selectOneMenu>
+               <p:outputLabel for="@previous" value="Genero"
+                              style="color: white"
+               />
+           </span> <br/>
+
+                    <span class="ui-float-label">
+                        <p:selectOneMenu id="gradoMaximoEstudioss" value="#{pacienteIndexMB.pacienteSelected.gradoMaximoEstudios}"
+                                         style="width: 45%"
+                        >
+                        <f:selectItem itemLabel="sin estudios" itemValue="sin estudios"/>
+                        <f:selectItem itemLabel="preescolar" itemValue="preescolar" />
+                        <f:selectItem itemLabel="primaria" itemValue="primaria" />
+                        <f:selectItem itemLabel="secundaria" itemValue="secundaria" />
+                        <f:selectItem itemLabel="bachillerato" itemValue="bachillerato" />
+                        <f:selectItem itemLabel="licenciatura" itemValue="licenciatura" />
+                        <f:selectItem itemLabel="maestria" itemValue="maestria" />
+                        <f:selectItem itemLabel="doctorado" itemValue="doctorado" />
+                        <f:selectItem itemLabel="otro" itemValue="otro" />
+                    </p:selectOneMenu>
+               <p:outputLabel for="@previous" value="Grado Maximo de Estudios"
+                              style="color: white"
+               />
+           </span> <br/>
+                    <span class="ui-float-label">
+                        <p:selectOneMenu id="later" value="#{pacienteIndexMB.pacienteSelected.lateralidad}"
+                                         style="width: 45%"
+                        >
+                        <f:selectItem itemLabel="diestro" itemValue="diestro" />
+                        <f:selectItem itemLabel="zurdo" itemValue="zurdo" />
+                        <f:selectItem itemLabel="ambidiestro" itemValue="ambidiestro" />
+                    </p:selectOneMenu>
+               <p:outputLabel for="@previous" value="Lateralidad"
+
+                              style="color: white"/>
+           </span> <br/>
+                    <span class="ui-float-label">
+                        <p:inputMask id="fna" value="#{pacienteIndexMB.pacienteSelected.fechaNacimiento}"
+                                     mask="99/99/9999"
+                                     placeholder="dd/mm/aaaa"/>
+               <p:outputLabel for="@previous" value="Fecha de Nacimiento"
+                              style="color: white"
+               />
+           </span> <br/>
+
+
+                <span class="ui-float-label">
+                    <p:selectOneMenu  id="edo" value="#{pacienteIndexMB.pacienteSelected.estado}"  style="width: 45%">
+                        <f:selectItem itemLabel="activo" itemValue="activo" />
+                        <f:selectItem itemLabel="inactivo" itemValue="inactivo" />
+                    </p:selectOneMenu>
+
+               <p:outputLabel for="@previous" value="Estado"
+                              style="color: white"
+               />
+           </span> <br/>
+
+
+                    <span class="ui-float-label">
+               <p:inputTextarea id="observacionesv" value="#{pacienteIndexMB.pacienteSelected.observaciones}"
+                            rows="6" cols="33"/>
+               <p:outputLabel for="@previous" value="Observaciones"
+                              style="color: white"
+               />
+           </span> <br/> <br/>
+
+                    <p:commandButton value="Guardar"
+                                     id="btnupd"
+                                     actionListener="#{pacienteIndexMB.update}"
+                                     style="margin-right:20px; margin-left:30%; background-color: #3399FF; color: white"
+                                     styleClass="ui-priority-primary"
+
+                                     ajax="false"
+                                     process="@all"
+                                     update="@([id$=tablaPaciente]) @([id$=formPaciente]) "/>
+
+
+            </p:dialog>
+
+
+
+            <!--CAMBIAR CONTRASEÑA ESPECIALISTA-->
+            <p:dialog header="Cambiar contraseña" widgetVar="dlgAddEsp" modal="false" height="180"
+                      style="background-color: #3399CC"
+                      width="450"
+            >
+                    <span class="ui-float-label">
+                        <p:inputText id="correoCO" value="#{especialistaUpdate.correo}"/>
+                        <p:outputLabel for="@previous" style="color: white" value="  Correo electrónico"/>
+                    </span> <br/>
+                <span>
+                    <p:password id="pwo"
+                                value="#{especialistaUpdate.pwo}"
+                                feedback="true"
+                    />
+                    <p:outputLabel for="@previous"  style="color: white" value="  Contraseña anterior"/>
+                    </span> <br/>
+                <span>
+                    <p:password id="pwn"
+                                value="#{especialistaUpdate.pwn}"
+                                feedback="true"
+                    />
+                    <p:outputLabel for="@previous" style="color: white" value="  Contraseña nueva"/>
+                    </span> <br/> <br/>
+                <p:commandButton value="Guardar"
+                                 id="btnup"
+
+                                 ajax="false"
+                                 process="@all"
+                                 actionListener="#{especialistaUpdate.update}"
+                                 style="margin-right:20px; margin-left:30%; background-color: #3399FF; color: white"
+                                 styleClass="ui-priority-primary"/>
+            </p:dialog>
+
+
+
+
+        </h:form>
+    </ui:define>
+</ui:composition>

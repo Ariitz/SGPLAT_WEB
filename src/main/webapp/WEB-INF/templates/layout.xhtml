@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+>
+<h:head>
+    <title>SGPLAT</title>
+</h:head>
+<h:body > <p:growl id="messages" showDetail="true" sticky="true"/>
+
+    <p:layout fullPage="true" >
+        <p:layoutUnit  style="background-color: #3399CC;" position="north" size="130"  resizable="false" closable="false" collapsible="false">
+
+            <h:form >
+                <p:panelGrid columns="2" style="margin-left: 62%">
+                    <p:column>
+                        <h:outputText value="SGPLAT" style="color: #3399CC; font-family: montez; font-size: 200%;"
+                        />
+                    </p:column>
+                    <p:column >
+                        <p:panelMenu style="width:300px;  font-size: 78%"  >
+                            <p:submenu label="Opciones"  expanded="false">
+                                <p:menuitem value="Cerrar sesión"  icon="pi pi-save"
+                                            style="background-color: #3399CC;
+                                            color:white;"
+                                            ajax="false"
+                                            action="#{loginMB.logOut}"
+                                            process="@all"
+
+                                />
+                                <p:menuitem value="Cambiar contraseña"
+                                            style="background-color: #3399CC; color: white"
+                                            icon="pi pi-refresh"
+                                            onclick="PF('dlgAddEsp').show()"
+
+                                />
+                            </p:submenu>
+                        </p:panelMenu>
+                    </p:column>
+                </p:panelGrid>
+
+
+            </h:form>
+        </p:layoutUnit>
+
+
+
+        <p:layoutUnit position="south"   size="100"  resizable="false" closable="false" collapsible="false"
+                     >
+            <h:outputText value=" "/>
+        </p:layoutUnit>
+
+        <p:layoutUnit position="west" size="200" resizable="false" closable="false" collapsible="false" >
+            <h:form >
+                <ui:include src="../templates/themeMenu.xhtml"/>
+            </h:form>
+        </p:layoutUnit>
+
+        <p:layoutUnit position="center" >
+            <ui:insert name="content">Put default content here, if any.</ui:insert>
+        </p:layoutUnit>
+    </p:layout>
+</h:body>
+</html>

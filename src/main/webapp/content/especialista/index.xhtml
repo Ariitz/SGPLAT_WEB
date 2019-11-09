@@ -1,0 +1,96 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+>
+    <ui:define name="content">
+        <h:form id="formEspecialista">
+            <p:dataTable id="tablaEspecialistas"
+                         var="especialista"
+                         value="#{especialistaIndexMB.especialistas}">
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{especialista.getString('nombre')}"/>
+                </p:column>
+                <p:column headerText="Correo">
+                    <h:outputText value="#{especialista.getString('correo')}"/>
+                </p:column>
+                <p:column headerText="Acciones">
+
+
+
+
+                </p:column>
+            </p:dataTable>
+
+            <p:commandButton value="Cambiar contraseña" onclick="PF('dlgUpdate').show()"/>
+
+            <p:dialog header="Modal Dialog" widgetVar="dlgAdd" modal="false" height="100">
+
+            <span class="ui-float-label">
+               <p:inputText id="nom" value="#{especialistaAdd.nombre}"/>
+               <p:outputLabel for="@previous" value="Nombre"/>
+           </span> <br/>
+                <span class="ui-float-label">
+                    <p:inputText id="correo" value="#{especialistaAdd.correo}"/>
+                    <p:outputLabel for="@previous" value="Correo electrónico"/>
+                </span> <br/>
+                <span class="ui-float-label">
+               <p:password id="feedback"
+                           value="#{especialistaAdd.contrasena}"
+                           feedback="true"
+               />
+               <p:outputLabel for="@previous" value="Contraseña"/>
+           </span> <br/>
+
+                <p:commandButton value="Agregar"
+                                 id="btnadd"
+                                 actionListener="#{especialistaAdd.add(especialistaIndexMB.especialistas)}"
+                                 style="margin-right:20px;"
+                                 styleClass="ui-priority-primary"
+                                 update="@([id$=tablaEspecialistas]) @([id$=formEspecialista]) "/>
+
+
+
+            </p:dialog>
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times"/>
+            </p:confirmDialog>
+
+
+            <p:dialog header="Modal Dialog" widgetVar="dlgUpdate" modal="false" height="100">
+                <p:outputLabel  value="Correo:"/>
+                <p:outputLabel  value="#{loginMB.user}" />
+                <span class="ui-float-label">
+                    <p:inputText id="correoC" value="#{especialistaUpdate.correo}"/>
+                    <p:outputLabel for="@previous" value="Correo electrónico"/>
+                </span> <br/>
+                <span>
+                    <p:password id="pwo"
+                                value="#{especialistaUpdate.pwo}"
+                                feedback="true"
+                    />
+                    <p:outputLabel for="@previous" value="Contraseña anterior"/>
+                </span> <br/>
+                <span>
+                    <p:password id="pwn"
+                                value="#{especialistaUpdate.pwn}"
+                                feedback="true"
+                    />
+                    <p:outputLabel for="@previous" value="Contraseña nueva"/>
+                </span> <br/>
+                <p:commandButton value="Guardar"
+                                 id="btnup"
+                                 actionListener="#{especialistaUpdate.update}"
+                                 style="margin-right:20px;"
+                                 styleClass="ui-priority-primary"
+                                 update="@([id$=tablaEspecialistas]) @([id$=formEspecialista]) "/>
+            </p:dialog>
+
+
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,30 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+>
+    <ui:define name="content">
+        Traps
+
+        <h:form>
+            <p:commandButton value="Buscar"
+                             actionListener="#{pregunta32.onClick()}"
+                             process="@this @form"
+                             update="@([id$=tablaTraps])"
+            />
+        </h:form>
+        <p:dataTable id="tablaTraps" value="#{pregunta32.objectList}" var="var" >
+            <p:column>
+                <h:outputText value="#{var.get('oid')}" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{var.get('string')}" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{var.get('time')}" converter="dateConverter" />
+            </p:column>
+        </p:dataTable>
+    </ui:define>
+</ui:composition>

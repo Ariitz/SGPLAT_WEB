@@ -1,0 +1,66 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+>
+    <ui:define name="content">
+
+
+
+
+
+        <h:form id="form">
+
+            <h:outputLabel value="Las palabras que escuchó, en este orden, el paciente fueron:" ></h:outputLabel> <br></br>
+            <br></br>
+
+            <h:outputLabel value="Palabra 1:  " ></h:outputLabel>
+            <h:outputLabel value="#{pacienteIndexMB.palabra1}" style="color: darkblue"></h:outputLabel> <br/>
+            <h:outputLabel value="Palabra 2:  " ></h:outputLabel>
+            <h:outputLabel value="#{pacienteIndexMB.palabra2}" style="color: darkblue" ></h:outputLabel><br/>
+            <h:outputLabel value="Palabra 3:  " ></h:outputLabel>
+            <h:outputLabel value="#{pacienteIndexMB.palabra3}" style="color: darkblue"></h:outputLabel> <br/>
+            <h:outputLabel value="Palabra 4:  " ></h:outputLabel>
+            <h:outputLabel value="#{pacienteIndexMB.palabra4}"  style="color: darkblue"></h:outputLabel> <br/>
+            <h:outputLabel value="Palabra 5:  " ></h:outputLabel>
+            <h:outputLabel value="#{pacienteIndexMB.palabra5}" style="color: darkblue"></h:outputLabel><br/>
+            <h:outputLabel value="Palabra 6:  " ></h:outputLabel>
+            <h:outputLabel value="#{pacienteIndexMB.palabra6}" style="color: darkblue"></h:outputLabel> <br/>
+            <h:outputLabel value="Palabra 7:  " ></h:outputLabel>
+            <h:outputLabel value="#{pacienteIndexMB.palabra7}" style="color: darkblue"></h:outputLabel><br/>
+            <h:outputLabel value="Palabra 8:  " ></h:outputLabel>
+            <h:outputLabel value="#{pacienteIndexMB.palabra8}" style="color: darkblue"></h:outputLabel><br/>
+            <h:outputLabel value="Palabra 9:  " ></h:outputLabel>
+            <h:outputLabel value="#{pacienteIndexMB.palabra9}" style="color: darkblue"></h:outputLabel><br/>
+            <h:outputLabel value="Palabra 10: " ></h:outputLabel>
+            <h:outputLabel value="#{pacienteIndexMB.palabra10}" style="color: darkblue"></h:outputLabel><br/>
+            <br/>
+
+            <p:commandButton
+                value="Descargar audio"
+                action="#{pacienteIndexMB.descargar}"
+                             style="background-color: #3399CC; width: 20%"
+            ></p:commandButton> <br></br><br></br><br></br>
+                <p:outputLabel
+                    value="Ingrese los aciertos ciertos"
+                ></p:outputLabel> <br/>
+                <p:inputText
+                value="#{pacienteIndexMB.aciertos}"
+                >
+
+                </p:inputText>
+            <p:commandButton
+                    action="#{pacienteIndexMB.calificar}"
+                    ajax="false"
+                    value="Calificar"
+                    update="@([id$=tablaIntentosPalabras])"
+                    style="background-color: #3399CC; width: 10%; margin-left: 1%"
+            ></p:commandButton> <br></br>
+
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
