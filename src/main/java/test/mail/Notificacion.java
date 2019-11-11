@@ -1,17 +1,13 @@
 package test.mail;
 
-import com.sun.mail.smtp.SMTPTransport;
-
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.util.Date;
 import java.util.Properties;
 
-public class SendEmailSMTP {
+public class Notificacion {
 
-    public static void main(String[] args) {
+    public static void sendMessage(String correo) {
 
         final String username = "sgplat.notificacion@gmail.com";
         final String password = "HELGRINDzarzamora45";
@@ -35,11 +31,12 @@ public class SendEmailSMTP {
             message.setFrom(new InternetAddress(username));
             message.setRecipients(
                     Message.RecipientType.TO,
-                    InternetAddress.parse("dhmora43@gmail.com, escomtfjaprueba@gmail.com")
+                    InternetAddress.parse(correo+","+username)
             );
-            message.setSubject("Testing Gmail TLS");
-            message.setText("Dear Mail Crawler,"
-                    + "\n\n Please do not spam my email!");
+            message.setSubject("Prueba asignada");
+
+            message.setText("Saludos.\n Su especialista le acaba de asignar una prueba." +
+                    "Vaya a su aplicación SGPLAT en su tableta para realizarla.");
 
             Transport.send(message);
 
@@ -49,4 +46,6 @@ public class SendEmailSMTP {
             e.printStackTrace();
         }
     }
+
 }
+

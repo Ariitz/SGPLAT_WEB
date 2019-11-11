@@ -3,7 +3,6 @@ package Model.general;
 
 import Util.webservice.WSConsumer;
 import com.mongodb.DBObject;
-import org.primefaces.context.RequestContext;
 import org.primefaces.json.JSONObject;
 
 import javax.annotation.PostConstruct;

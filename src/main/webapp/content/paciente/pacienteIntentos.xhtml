@@ -37,16 +37,20 @@
             <p:commandButton value="Asignar prueba" style="background-color: #0099FF; margin-left: 84%"
                              onclick="PF('dlgAsig').show()"
             />
-            <!--<h:commandLink>
-                <p:commandButton value="Generar Reporte" style="background-color: #0099FF"></p:commandButton>
-                <p:dataExporter target="tbl" type="pdf" fileName="pruebaRaven"></p:dataExporter>
-            </h:commandLink>-->
+
+
+            <h:commandLink >
+                Reporte
+                <p:dataExporter target="tablaIntentos" type="pdf" fileName="pruebaRaven"
+                                preProcessor="#{pacienteIndexMB.preProcessPDF}"></p:dataExporter>
+            </h:commandLink>
             <p:dataTable id="tablaIntentos"
                          var="intento"
                          widgetVar="intentos"
                          value="#{pacienteIndexMB.intentos}"
 
             >
+
                 <p:column headerText="estado" style="color: darkblue;">
                     <h:outputText value="#{intento.getString('edo')}"/>
                 </p:column>

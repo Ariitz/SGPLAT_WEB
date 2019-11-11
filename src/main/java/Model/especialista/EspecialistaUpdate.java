@@ -42,7 +42,9 @@ public class EspecialistaUpdate implements Serializable {
                 return "ok";
             }
             else {
-                return null;
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage("Revise sus datos"));
+                return "error";
             }
 
 
@@ -52,7 +54,7 @@ public class EspecialistaUpdate implements Serializable {
             e.printStackTrace();
 
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage("Revise sus datos"));
+                    new FacesMessage("Falta algún dato"));
             return "error";
         }
     }

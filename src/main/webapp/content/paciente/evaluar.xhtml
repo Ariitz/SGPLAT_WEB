@@ -38,11 +38,16 @@
             <h:outputLabel value="#{pacienteIndexMB.palabra10}" style="color: darkblue"></h:outputLabel><br/>
             <br/>
 
+
             <p:commandButton
                 value="Descargar audio"
                 action="#{pacienteIndexMB.descargar}"
                              style="background-color: #3399CC; width: 20%"
-            ></p:commandButton> <br></br><br></br><br></br>
+            >
+
+
+
+            </p:commandButton> <br></br><br></br><br></br>
                 <p:outputLabel
                     value="Ingrese los aciertos ciertos"
                 ></p:outputLabel> <br/>
@@ -61,6 +66,32 @@
 
 
         </h:form>
+
+
+
+
+        <script type="text/javascript">
+            //<![CDATA[
+            function start() {
+                PF('statusDialog').show();
+            }
+
+            function stop() {
+                PF('statusDialog').hide();
+            }
+            //]]>
+        </script>
+
+
+        <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
+            <p:graphicImage url="https://storage.googleapis.com/public_files_dgsjl/load.gif" />
+        </p:dialog>
+        <h:form>
+            <p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="pi pi-arrow-down">
+                <p:fileDownload value="#{pacienteIndexMB.file}" />
+            </p:commandButton>
+        </h:form>
+
     </ui:define>
 
 </ui:composition>
